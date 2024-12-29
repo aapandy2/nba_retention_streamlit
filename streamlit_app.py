@@ -79,7 +79,15 @@ st.markdown('''This page provides an interactive executive summary of the
             It was named a Top Project for the Erdos Institute Data Science
             Bootcamp, Fall 2024.''')
 
-st.markdown('''The project aims to answer the following question: _can we
+group_url = "https://github.com/NBA-player-transactions/predicting_nba_player_retention"
+fork_url  = "https://github.com/aapandy2/predicting_nba_player_retention"
+
+st.markdown(f'''For more details, see the [project repository]({group_url}).
+                The original project was extended by Alex Pandya to include
+                calibration and this app; for the extended repository, see 
+                [this fork]({fork_url})''')
+
+st.markdown('''**The project aims to answer the following question:** _can we
             predict whether or not a given NBA player will still be in the
             league next season, given just present-season statistics and
             transaction data?_''')
@@ -112,20 +120,23 @@ visualize_data(year, x_stat, y_stat)
 
 st.subheader("Model predictions")
 
-st.markdown('''The bar charts below summarize the predictions of our
-               best-performing model (XGBoost with SMOTE-augmented training
-               data, calibrated using Platt's method) trained on data from
-               seasons before the one set in the slider.  The height of the bar
-               gives the probability that the player will play at any point
+st.markdown(f'''The bar charts below summarize the predictions of our
+               best-performing [model]({fork_url}) (XGBoost with SMOTE-augmented
+               training data, calibrated using Platt's method) trained on data
+               from seasons before the one set in the slider. The height of the
+               bar gives the probability that the player will play at any point
                in the next season, and the color gives whether or not they did
                play in the following season.''')
+
+st.markdown('''For the most recent (2023) season, the color corresponds to the
+               model's prediction for whether or not a given player will play at
+               any point during the 2024-2025 season.  Note that the y-axis
+               probabilities come from the calibrator, which is not used to
+               make classifications, so the decision threshold is generally
+               not at 0.5 in the plots below.''')
 
 pred_year = st.slider(label="Season start year:", min_value=2017,
                       max_value=2023) 
 pred_team = st.selectbox("Team:", teams)
 
 visualize_preds(pred_year, pred_team)
-
-st.markdown('''Note: for the 2023 season we do not yet know whether a given
-               player will play _at any point_, so the color of the bars comes
-               from the classifier.''')
