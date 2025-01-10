@@ -110,8 +110,8 @@ stats = list(features.drop(['WAIVED', 'RELEASED', 'TRADED',
        'TRADED_POST']))
 stats.sort()
 
-x_stat = st.selectbox("x-axis:", stats)
-y_stat = st.selectbox("y-axis:", stats)
+x_stat = st.selectbox("x-axis:", stats, index=22)
+y_stat = st.selectbox("y-axis:", stats, index=30)
 year   = st.slider(label="Season start year:", min_value=1990, max_value=2022)
 
 visualize_data(year, x_stat, y_stat)
@@ -122,7 +122,7 @@ st.subheader("Model predictions")
 
 st.markdown(f'''The bar charts below summarize the predictions of our
                best-performing [model]({fork_url}) (XGBoost with SMOTE-augmented
-               training data, calibrated using Platt's method) trained on data
+               training data, calibrated using Platt scaling) trained on data
                from seasons before the one set in the slider. The height of the
                bar gives the probability that the player will play at any point
                in the next season, and the color gives whether or not they did
